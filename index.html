@@ -1,56 +1,587 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ru">
 <head>
-  <!-- 
-      This is an HTML comment
-      You can write text in a comment and the content won't be visible in the page
-    -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>КиноМарвелДиси - Новости и факты кино</title>
+<style>
+  /* Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #000000, #001d3d);
+    color: #e1e8f0;
+    min-height: 100vh;
+  }
+  a {
+    color: #5fb0f1;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
 
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="https://glitch.com/favicon.ico" />
+  /* header */
+  header {
+    background: #001d3ddd;
+    padding: 18px 50px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 10px #000000bb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  nav a {
+    margin: 0 22px;
+    font-weight: 600;
+    font-size: 18px;
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+  nav a.active, nav a:hover {
+    color: #0099ff;
+  }
+  .logo {
+    font-weight: 900;
+    font-size: 26px;
+    color: #5fb0f1;
+    user-select: none;
+    cursor: default;
+  }
 
-  <!--
-      This is the page head - it contains info the browser uses
-      Like the title, which appears on the browser tab but not inside the page
-      Further down you'll see the content that displays in the page
-    -->
-  <title>Hello World!</title>
+  main {
+    max-width: 1100px;
+    margin: 110px auto 70px auto;
+    padding: 0 20px;
+    scroll-behavior: smooth;
+  }
 
-  <!-- The website stylesheet -->
-  <link rel="stylesheet" href="/style.css" />
+  /* Главное */
+  #home {
+    border-radius: 18px;
+    overflow: hidden;
+    background-image:
+      linear-gradient(to bottom, rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
+      url('https://images.unsplash.com/photo-1517602302552-471fe67acf66?auto=format&fit=crop&w=1280&q=80');
+    background-position: center;
+    background-size: cover;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px 40px;
+    color: #f0f9ff;
+    text-shadow: 0 0 8px #004a99;
+    user-select: none;
+  }
+  #home h1 {
+    font-size: 3.8rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+  }
+  #home p {
+    font-size: 1.3rem;
+    max-width: 700px;
+    line-height: 1.5;
+  }
 
-  <!-- The website JavaScript file -->
-  <script src="/script.js" defer></script>
+  /* Новости */
+  #news {
+    margin-top: 70px;
+  }
+  #news h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 22px;
+    border-left: 6px solid #0099ff;
+    padding-left: 18px;
+  }
+  .news-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
+    gap: 28px;
+  }
+  .news-card {
+    background: #001d3dce;
+    border-radius: 16px;
+    box-shadow: 0 6px 16px #000000ee;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .news-card:hover {
+    transform: scale(1.04);
+  }
+  .news-image {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    border-bottom: 3px solid #0099ff;
+  }
+  .news-content {
+    padding: 18px 24px 22px;
+    display: flex;
+    flex-direction: column;
+  }
+  .news-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #7fc5ff;
+    margin-bottom: 14px;
+  }
+  .news-date {
+    font-size: 0.85rem;
+    color: #7ea7c7;
+  }
+  .news-desc {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #cad9e9;
+    flex-grow: 1;
+  }
+  .news-link {
+    color: #56a6ff;
+    font-weight: 600;
+    margin-top: 16px;
+    font-size: 0.95rem;
+    align-self: flex-start;
+    transition: color 0.3s ease;
+  }
+  .news-link:hover {
+    color: #004f99;
+  }
+
+  /* Интересные факты */
+  #facts {
+    margin-top: 75px;
+  }
+  #facts h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 22px;
+    border-left: 6px solid #0099ff;
+    padding-left: 18px;
+  }
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(330px,1fr));
+    gap: 26px;
+  }
+  .fact-card {
+    background: #001d3dce;
+    border-radius: 16px;
+    padding: 24px 28px;
+    box-shadow: 0 5px 16px #000000ee;
+    transition: background-color 0.35s ease;
+  }
+  .fact-card:hover {
+    background-color: #003366cc;
+  }
+  .fact-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #d7e4f5;
+  }
+
+  /* Кадры из кино (слайдер) */
+  #gallery {
+    margin-top: 75px;
+  }
+  #gallery h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 22px;
+    border-left: 6px solid #0099ff;
+    padding-left: 18px;
+  }
+  .gallery-slider {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+  }
+  .gallery-track {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+  .gallery-slide {
+    min-width: 300px;
+    margin-right: 14px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px #000000cc;
+    cursor: pointer;
+  }
+  .gallery-slide img {
+    width: 100%;
+    display: block;
+    filter: brightness(85%);
+    transition: filter 0.3s ease;
+  }
+  .gallery-slide:hover img {
+    filter: brightness(110%);
+  }
+  .gallery-controls {
+    margin-top: 10px;
+    text-align: center;
+  }
+  .gallery-button {
+    background: #0058b3;
+    border: none;
+    padding: 8px 16px;
+    margin: 0 6px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 22px;
+    transition: background 0.3s ease;
+  }
+  .gallery-button:hover {
+    background: #0077e6;
+  }
+
+  /* Контакты */
+  #contact {
+    margin: 80px auto 50px auto;
+    max-width: 740px;
+    padding: 28px 24px;
+    background: #001d3dee;
+    border-radius: 16px;
+    box-shadow: 0 7px 20px #000000dd;
+    text-align: center;
+  }
+  #contact h2 {
+    font-size: 2.6rem;
+    margin-bottom: 20px;
+    border-left: 6px solid #0099ff;
+    padding-left: 18px;
+  }
+  #contact p {
+    font-size: 1.1rem;
+    color: #aaccee;
+    line-height: 1.5;
+    user-select: none;
+  }
+  #contact a.telegram {
+    color: #67aaff;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: text;
+    transition: color 0.25s ease;
+  }
+  #contact a.telegram:hover {
+    text-decoration: underline;
+  }
+  #contact a.telegram:active {
+    color: #004477;
+  }
+  #contact #tgDesc {
+    font-size: 0.85rem;
+    color: #7ea7c7;
+    margin-top: 8px;
+  }
+
+  /* Модальное окно с подтверждением (для долгого нажатия) */
+  #modalConfirm {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+  }
+  #modalConfirm .modal-content {
+    background: #002651;
+    padding: 28px 36px;
+    border-radius: 14px;
+    color: #bbddff;
+    box-shadow: 0 10px 30px #000000dd;
+    max-width: 400px;
+    text-align: center;
+  }
+  #modalConfirm button {
+    margin-top: 24px;
+    padding: 10px 26px;
+    background: #0099ff;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+  }
+  #modalConfirm button:hover {
+    background: #007acc;
+  }
+
+  /* Кнопка вверх */
+  #scrollTopBtn {
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #0099ffcc;
+    border: none;
+    border-radius: 28px;
+    width: 52px;
+    height: 52px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px #0069ccaa;
+    display: none;
+    z-index: 3500;
+    transition: background 0.3s ease;
+  }
+  #scrollTopBtn:hover {
+    background: #007acccc;
+  }
+  #scrollTopBtn svg {
+    fill: #fff;
+    width: 26px;
+    height: 26px;
+    margin: 13px;
+  }
+
+</style>
 </head>
-
 <body>
-  <!--
-      The body includes the content you see in the page
-      Each element is defined using tags, like this <div></div>
-      The attributes like class="wrapper" let us style elements in the CSS
-    -->
-  <div class="wrapper">
-    <div class="content" role="main">
-      <h1 class="title">Oh hi website!</h1>
-      <img src="/cool-website.svg" class="illustration" alt="cool website" />
-      <div class="instructions">
-        <p>
-          Fork <a href="https://github.com/glitchdotcom/website-to-compute">this project</a> and open it in a GitHub Codespace.
-        </p>
-        <p> Follow the steps in the README to deploy your new website to Fastly in a few steps!
-        </p>
 
+<header>
+  <div class="logo" tabindex="0" aria-label="Логотип КиноМарвелДиси">КиноМарвелДиси</div>
+  <nav>
+    <a href="#home" class="active" tabindex="0">Главное</a>
+    <a href="#news" tabindex="0">Новости</a>
+    <a href="#facts" tabindex="0">Интересные факты</a>
+    <a href="#gallery" tabindex="0">Кадры из кино</a>
+    <a href="#contact" tabindex="0">Контакты</a>
+  </nav>
+</header>
+
+<main>
+<section id="home" tabindex="0" aria-label="Главная секция">
+  <h1>Добро пожаловать в мир кино!</h1>
+  <p>Окунитесь в атмосферу захватывающих фильмов, сериалов и анимации.<br>  
+  Актуальные новости, увлекательные факты, красивые кадры и многое другое — всё это вы найдёте у нас.</p>
+</section>
+
+<section id="news" tabindex="0" aria-label="Свежие новости кино">
+  <h2>Свежие новости кино</h2>
+  <div class="news-list" aria-live="polite" aria-relevant="additions">
+    <p style="color:#709ec8;">Загрузка новостей...</p>
+  </div>
+</section>
+
+<section id="facts" tabindex="0" aria-label="Интересные факты о кино">
+  <h2>Интересные факты</h2>
+  <div class="facts-grid">
+    <article class="fact-card" tabindex="0">
+      <p class="fact-text">Первый звуковой фильм – «Певец джаза» (1927) — положил начало новой эпохе в кинематографе.</p>
+    </article>
+    <article class="fact-card" tabindex="0">
+      <p class="fact-text">Термин "блокбастер" изначально относился к фильмам, собравшим более миллиона долларов в прокате.</p>
+    </article>
+    <article class="fact-card" tabindex="0">
+      <p class="fact-text">Знаменитый спецэффект "Зеленый экран" впервые применили в фильме «Запретная планета» (1956).</p>
+    </article>
+    <article class="fact-card" tabindex="0">
+      <p class="fact-text">Премия Оскар вручается ежегодно с 1929 года и является одной из самых престижных в киноиндустрии.</p>
+    </article>
+  </div>
+</section>
+
+<section id="gallery" tabindex="0" aria-label="Кадры из популярных фильмов и сериалов">
+  <h2>Кадры из кино</h2>
+  <div class="gallery-slider" aria-roledescription="carousel">
+    <div class="gallery-track" id="galleryTrack">
+      <div class="gallery-slide" tabindex="0" role="group" aria-label="Кадр из фильма Игра Престолов">
+        <img src="https://i.pinimg.com/originals/12/1a/5e/121a5e485427c7739bbfd100cbd917de.jpg" alt="Игра Престолов: Кадр с драконами" />
       </div>
-
-      <footer class="footer">
-        <div>
-          <a class="remix" href="https://github.com/glitchdotcom/website-to-compute">🚧 Get your own site</a>
-        </div>
-      </footer>
+      <div class="gallery-slide" tabindex="0" role="group" aria-label="Кадр из мультфильма Король Лев">
+        <img src="https://wallpaperaccess.com/full/660956.jpg" alt="Король Лев - Симба на горе" />
+      </div>
+      <div class="gallery-slide" tabindex="0" role="group" aria-label="Кадр из фильма Мстители">
+        <img src="https://wallpapercave.com/wp/wp4865223.jpg" alt="Мстители - герои вместе" />
+      </div>
+      <div class="gallery-slide" tabindex="0" role="group" aria-label="Кадр из сериала Во все тяжкие">
+        <img src="https://wallpaperaccess.com/full/2776940.jpg" alt="Во все тяжкие - Уолтер и Джесси" />
+      </div>
+      <div class="gallery-slide" tabindex="0" role="group" aria-label="Кадр из фильма Матрица">
+        <img src="https://wallpapercave.com/wp/wp1836793.jpg" alt="Матрица - главный герой в темноте" />
+      </div>
     </div>
   </div>
-</body>
+  <div class="gallery-controls" aria-label="Управление слайдером">
+    <button class="gallery-button" id="prevBtn" aria-label="Предыдущий кадр">←</button>
+    <button class="gallery-button" id="nextBtn" aria-label="Следующий кадр">→</button>
+  </div>
+</section>
 
+<section id="contact" tabindex="0" aria-label="Контакты">
+  <h2>Связаться с нами</h2>
+  <p>
+    Подписывайтесь на наш  
+    <a href="https://t.me/cinemarveldc" target="_blank" rel="noopener noreferrer" class="telegram" id="tgLink" aria-describedby="tgDesc">Телеграм-канал о новостях кино</a>,
+    чтобы всегда быть в курсе свежих событий.
+  </p>
+  <p id="tgDesc" style="font-size:0.85rem; color:#709ec8; margin-top:6px;">
+    Для перехода удерживайте ссылку 2 секунды
+  </p>
+</section>
+</main>
+
+<!-- Модальное окно с подтверждением -->
+<div id="modalConfirm" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+  <div class="modal-content">
+    <p id="modalTitle">Вы собираетесь перейти на Телеграм канал.</p>
+    <p id="modalDesc">Подтвердите действие, чтобы перейти.</p>
+    <button id="confirmBtn">Перейти</button>
+  </div>
+</div>
+
+<!-- Кнопка "Наверх" -->
+<button id="scrollTopBtn" aria-label="Наверх">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M12 4l-8 8h5v8h6v-8h5z"/>
+  </svg>
+</button>
+
+<script>
+  // Навигация: смена активного класса и плавный скролл
+  const navLinks = document.querySelectorAll("nav a");
+  navLinks.forEach(link => {
+    link.addEventListener("click", evt => {
+      evt.preventDefault();
+      navLinks.forEach(l => l.classList.remove("active"));
+      evt.currentTarget.classList.add("active");
+      const target = document.querySelector(evt.currentTarget.getAttribute("href"));
+      target.scrollIntoView({behavior: "smooth"});
+    });
+  });
+
+  // Долгое нажатие для перехода на Telegram
+  const tgLink = document.getElementById("tgLink");
+  const modal = document.getElementById("modalConfirm");
+  const confirmBtn = document.getElementById("confirmBtn");
+  let pressTimer;
+  let longPressTriggered = false;
+
+  tgLink.addEventListener("mousedown", startPress);
+  tgLink.addEventListener("touchstart", startPress);
+  tgLink.addEventListener("mouseup", cancelPress);
+  tgLink.addEventListener("touchend", cancelPress);
+  tgLink.addEventListener("mouseout", cancelPress);
+
+  function startPress(e) {
+    longPressTriggered = false;
+    pressTimer = window.setTimeout(() => {
+      longPressTriggered = true;
+      modal.style.display = "flex";
+    }, 2000);
+  }
+  function cancelPress(e) {
+    clearTimeout(pressTimer);
+  }
+  confirmBtn.addEventListener("click", () => {
+    window.open(tgLink.href, "_blank");
+    modal.style.display = "none";
+  });
+  modal.addEventListener("click", e => {
+    if(e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // Кнопка "Наверх"
+  const scrollBtn = document.getElementById("scrollTopBtn");
+  window.addEventListener('scroll', () => {
+    if(window.scrollY > 400) {
+      scrollBtn.style.display = "block";
+    } else {
+      scrollBtn.style.display = "none";
+    }
+  });
+  scrollBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Галерея - слайдер
+  const galleryTrack = document.getElementById("galleryTrack");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  let currentIndex = 0;
+  const slidesCount = galleryTrack.children.length;
+
+  function updateSlider() {
+    const slideWidth = galleryTrack.children[0].offsetWidth + 14; // плюс margin-right
+    galleryTrack.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
+  }
+  prevBtn.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + slidesCount) % slidesCount;
+    updateSlider();
+  });
+  nextBtn.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % slidesCount;
+    updateSlider();
+  });
+  window.addEventListener('resize', updateSlider);
+  updateSlider();
+
+  // Загрузка актуальных новостей из NewsAPI (с фильтрацией за последние 7 дней)
+  const newsContainer = document.querySelector('.news-list');
+  const apiKey = "b1112034d99545dab49d45ee488eb302";
+
+  async function loadNews() {
+    const now = new Date();
+    const fromDate = new Date(now);
+    fromDate.setDate(now.getDate() - 7);
+    const fromISO = fromDate.toISOString().split('T')[0];
+
+    const url = `https://newsapi.org/v2/everything?`+
+      `q=кино OR фильмы OR сериалы OR "кинематограф"&`+
+      `language=ru&`+
+      `from=${fromISO}&`+
+      `sortBy=publishedAt&`+
+      `apiKey=${apiKey}`;
+
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      if(data.status === "ok" && data.articles.length > 0) {
+        newsContainer.innerHTML = "";
+        data.articles.slice(0, 10).forEach(article => {
+          const imgUrl = article.urlToImage || "https://via.placeholder.com/300x170?text=Нет+изображения";
+          const pubDate = new Date(article.publishedAt).toLocaleDateString("ru-RU", {day:"2-digit",month:"short",year:"numeric"});
+          const card = document.createElement("div");
+          card.className = "news-card";
+          card.setAttribute('tabindex', '0');
+          card.innerHTML = `
+            <img class="news-image" src="${imgUrl}" alt="Новость кино">
+            <div class="news-content">
+              <h3 class="news-title">${article.title}</h3>
+              <span class="news-date">${pubDate}</span>
+              <p class="news-desc">${article.description||""}</p>
+              <a href="${article.url}" target="_blank" rel="noopener" class="news-link">Читать далее</a>
+            </div>
+          `;
+          newsContainer.appendChild(card);
+        });
+      } else {
+        newsContainer.innerHTML = `<p>Свежих новостей нет.</p>`;
+      }
+    } catch(e) {
+      newsContainer.innerHTML = `<p>Ошибка при загрузке новостей.</p>`;
+      console.error(e);
+    }
+  }
+  loadNews();
+
+</script>
+
+</body>
 </html>
